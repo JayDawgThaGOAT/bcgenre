@@ -2,38 +2,42 @@
 
 A [beets](https://beets.io/) plugin that fetches genre tags from Bandcamp release pages and merges them into your library’s `genres` field.
 
-It is meant to complement [`lastgenre`](https://beets.readthedocs.io/en/stable/plugins/lastgenre.html): Last.fm often misses artist-authored Bandcamp tags (and Bandcamp’s hyphenated forms like `hip-hop` / `neo-soul`). `bcgenre` reads those tags from the release page, normalizes them with lastgenre’s helpers, and filters them against a MusicBrainz genre whitelist.
+It complements [`lastgenre`](https://beets.readthedocs.io/en/stable/plugins/lastgenre.html): Last.fm often misses artist-authored Bandcamp tags (and Bandcamp’s hyphenated forms like `hip-hop` / `neo-soul`). `bcgenre` reads those tags from the release page, normalizes them with lastgenre’s helpers, and filters them against a MusicBrainz genre whitelist.
+
+**PyPI:** [beets-bcgenre](https://pypi.org/project/beets-bcgenre/)  
+**Source:** [JayDawgThaGOAT/bcgenre](https://github.com/JayDawgThaGOAT/bcgenre)
 
 ## Requirements
 
-- [beets](https://beets.io/) (includes the `lastgenre` package used for whitelist / aliases / canonicalization data)
-- [beetcamp](https://github.com/snejus/beetcamp) (`bandcamp` plugin) for Bandcamp HTML parsing and slug helpers
+- [beets](https://beets.io/) ≥ 2.0 (includes the `lastgenre` package used for whitelist / aliases / canonicalization data)
+- [beetcamp](https://github.com/snejus/beetcamp) (`bandcamp` plugin) for Bandcamp HTML parsing and slug helpers — pulled in automatically via PyPI
 - A Bandcamp URL in each item’s `comments` field (artist root or album URL), e.g. `Visit https://artist.bandcamp.com`
 
 ## Install
 
-Clone or copy this package so beets can see `beetsplug/bcgenre`:
-
-```text
-beetsplug/
-  bcgenre/
-    __init__.py
-    genres.py
-    resolve.py
-    README.md
+```bash
+pip install beets-bcgenre
 ```
 
-Point `pluginpath` at the parent of that `beetsplug` directory (or at the `beetsplug` directory itself — both work with beets), then enable the plugin:
+Enable the plugin (and usually `lastgenre` + `bandcamp`):
 
 ```yaml
 plugins: lastgenre bandcamp bcgenre
-pluginpath: /path/to/parent   # directory that contains beetsplug/
 ```
 
 Confirm it loads:
 
 ```bash
 beet bcgenre -h
+```
+
+### From source / pluginpath
+
+For development, clone the repo so beets can see `beetsplug.bcgenre`, then point `pluginpath` at the parent of that `beetsplug` directory:
+
+```yaml
+plugins: lastgenre bandcamp bcgenre
+pluginpath: /path/to/parent   # directory that contains beetsplug/
 ```
 
 ## Configuration
